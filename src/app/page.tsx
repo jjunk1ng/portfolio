@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { projects } from "@/data/projects";
+import CareerItem from "@/components/CareerItem";
 
 export default function Home() {
   return (
@@ -8,11 +9,20 @@ export default function Home() {
       <section className="max-w-4xl mx-auto px-6 pt-20 pb-16">
         <p className="text-sm text-muted mb-3">Service Planner / PM</p>
         <h1 className="text-4xl font-bold tracking-tight mb-4">남준우</h1>
-        <p className="text-lg text-muted leading-relaxed max-w-2xl">
-          PM 경력을 베이스로, 원활한 소통과 체계적인 계획을 바탕으로
-          <br />
-          꼼꼼하게 서비스를 설계하는 기획자입니다.
+        <p className="text-base italic text-muted mb-4">
+          &ldquo;업무 흐름 파악, 효율적 선택과 집중, 내외적 소통을 통한 의견조율&rdquo;
         </p>
+        <p className="text-muted leading-relaxed max-w-2xl">
+          컴퓨터학을 전공하였지만, 개발 분야보다 조금 더 자신있고 잘 할 수 있는
+          서비스 기획 분야로 나아가고 있습니다. 다수의 업무 경험을 바탕으로
+          기획, 커뮤니케이션, 위기관리, 협업 능력을 갖추고 있으며,
+          좋은 분들과 협업하여 공동의 가치를 창출하고 싶습니다.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 mt-6 text-sm text-muted">
+          <span>📞 010-7275-5694</span>
+          <span className="hidden sm:inline">·</span>
+          <span>✉️ jjunk1ng@naver.com</span>
+        </div>
         <div className="flex gap-4 mt-8">
           <a
             href="mailto:jjunk1ng@naver.com"
@@ -78,35 +88,96 @@ export default function Home() {
           <h2 className="text-sm font-medium text-muted mb-8 uppercase tracking-widest">
             About
           </h2>
+
+          {/* 경력 */}
+          <div className="mb-16">
+            <h3 className="text-xl font-semibold mb-6">
+              경력 <span className="text-sm font-normal text-muted ml-2">총 7년 3개월</span>
+            </h3>
+            <div className="space-y-10">
+              <CareerItem
+                period="2024.11 - 현재"
+                company="(주) 카베이"
+                role="서비스 기획자 · 선임"
+                items={[
+                  "플랫폼 별 IA 작성 및 관리",
+                  "기능 별 User Flow 작성 및 관리",
+                  "자사 Web/App 플랫폼 유지보수 및 서비스 기획 설계",
+                  "자사 어드민(Back Office) 유지보수 및 서비스 기획 설계",
+                  "개발 백로그 및 태스크 관리",
+                  "Claude AI 활용 UI/DB 모니터링 자동화 도구 기획·구현 (기여도 100%)",
+                  "컨소 통합 어드민 페이지 기획 및 개발 (UI/UX·기능·권한 설계)",
+                ]}
+              />
+              <CareerItem
+                period="2024.03 - 2024.09"
+                company="봄 아카데미"
+                role="UI/UX 디자인 부트캠프 (KDT)"
+                items={[
+                  "UX/UI 이론 (방법론, 리서치, 페르소나, 디자인 시스템)",
+                  "그래픽 툴 교육 및 실습 (Adobe Ps/Ai, Figma)",
+                  "카카오 이모티콘 리사이클링 서비스 기획",
+                  "구독 통합 정보 제공 서비스 GOODOCK(App) 기획",
+                  "차량 거래 웹 플랫폼 서비스 기획",
+                  "쏘로굿(Thorogood) 웹 디자인 리뉴얼",
+                ]}
+              />
+              <CareerItem
+                period="2022.03 - 2023.11"
+                company="주식회사 슈퍼브에이아이"
+                role="PM · 연구원"
+                items={[
+                  "B2G/B2B 데이터셋 구축 프로젝트 PM 수행",
+                  "과제 요구사항 분석 및 수행 일정 수립",
+                  "고객사 니즈 파악 및 커뮤니케이션",
+                  "데이터셋 분석 및 구축 설계 (Bbox, Polygon, Tracking 등)",
+                  "수집·가공·검수 공정 관리 및 크라우드 워커 교육",
+                  "내부 프로덕트(Annotation Tool) 개선 기획",
+                  "주요 고객사: 현대 로보틱스랩, 현대 자동차, LG, NBA 등",
+                ]}
+              />
+              <CareerItem
+                period="2019.08 - 2022.03"
+                company="주식회사 테스트웍스"
+                role="PL/PM · 연구원"
+                items={[
+                  "B2G/B2B 데이터셋 구축 프로젝트 PM/PL 수행",
+                  "데이터셋 구축을 위한 개발 도구 기획 (화면설계·기능정의·스토리보드)",
+                  "주관/참여 컨소시엄 간 커뮤니케이션",
+                  "K-Data 데이터 바우처 제안서 작성 (22개 중 12개 수주)",
+                  "신규입사자 대상 모의 프로젝트 기획 및 운영 관리",
+                  "채용 관리, 계약 관리, 노무 이슈 관리, 자산 관리",
+                  "주요 고객사: NIA, 스트라드비전, 삼성증권, 성균관대 등",
+                ]}
+              />
+            </div>
+          </div>
+
+          {/* 학력 & 스킬 */}
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-xl font-semibold mb-4">경력 요약</h3>
-              <p className="text-muted leading-relaxed">
-                PM 경력을 기반으로 서비스 기획 업무를 수행하고 있습니다.
-                이해관계자와의 원활한 소통, 체계적인 계획 수립,
-                꼼꼼한 화면 설계를 통해 사용자 중심의 서비스를 만들어갑니다.
-              </p>
+              <h3 className="text-xl font-semibold mb-4">학력</h3>
+              <div>
+                <h4 className="font-semibold">평택대학교</h4>
+                <p className="text-sm text-muted mt-0.5">
+                  컴퓨터학과 졸업 · 2014.03 - 2020.03
+                </p>
+              </div>
             </div>
             <div>
-              <h3 className="text-xl font-semibold mb-4">핵심 역량</h3>
-              <ul className="space-y-2 text-muted">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                  PM 경력 베이스의 기획력
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                  이해관계자와의 원활한 소통
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                  계획을 바탕으로 한 체계적 업무 수행
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                  꼼꼼한 화면 기획 및 문서 작성
-                </li>
-              </ul>
+              <h3 className="text-xl font-semibold mb-4">스킬</h3>
+              <div className="flex flex-wrap gap-2">
+                {["Figma", "Excel", "Slack", "Notion", "Adobe Photoshop", "Adobe Illustrator"].map(
+                  (skill) => (
+                    <span
+                      key={skill}
+                      className="text-sm px-3 py-1.5 bg-gray-100 text-muted rounded-full"
+                    >
+                      {skill}
+                    </span>
+                  )
+                )}
+              </div>
             </div>
           </div>
         </div>
