@@ -34,7 +34,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         href="/#projects"
         className="text-sm text-muted hover:text-foreground transition-colors"
       >
-        &larr; Back to Projects
+        &larr; 뒤로
       </Link>
 
       {/* Header */}
