@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
+import ProjectItemAccordion from "@/components/ProjectItemAccordion";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ id: p.id }));
 }
 
-export function generateMetadata({ params }: { params: { id: string } }) {
-  const project = projects.find((p) => p.id === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const project = projects.find((p) => p.id === id);
   if (!project) return {};
   return {
     title: `${project.title} | 남준우 포트폴리오`,
@@ -15,11 +17,12 @@ export function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-export default function ProjectPage({ params }: { params: { id: string } }) {
-  const project = projects.find((p) => p.id === params.id);
+export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const project = projects.find((p) => p.id === id);
   if (!project) notFound();
 
-  const currentIndex = projects.findIndex((p) => p.id === params.id);
+  const currentIndex = projects.findIndex((p) => p.id === id);
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject =
     currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
@@ -44,17 +47,6 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
         </h1>
         <p className="text-lg text-muted mt-3">{project.description}</p>
 
-        <div className="flex gap-6 mt-6 text-sm">
-          <div>
-            <span className="text-muted">역할</span>
-            <p className="font-medium mt-0.5">{project.role}</p>
-          </div>
-          <div>
-            <span className="text-muted">기간</span>
-            <p className="font-medium mt-0.5">{project.period}</p>
-          </div>
-        </div>
-
         <div className="flex gap-2 mt-4">
           {project.tags.map((tag) => (
             <span
@@ -67,17 +59,20 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
         </div>
       </header>
 
-      {/* Sections */}
-      <div className="space-y-12">
-        {project.sections.map((section, i) => (
-          <section key={i}>
-            <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
-            <div className="bg-gray-50 border border-border rounded-lg p-6">
-              <p className="text-muted text-sm">{section.content}</p>
-            </div>
-          </section>
-        ))}
-      </div>
+      {/* Items */}
+      {project.items.length > 0 ? (
+        <div className="space-y-4">
+          {project.items.map((item) => (
+            <ProjectItemAccordion key={item.id} item={item} />
+          ))}
+        </div>
+      ) : (
+        <div className="bg-gray-50 border border-border rounded-lg p-12 text-center">
+          <p className="text-muted text-sm">
+            콘텐츠 준비 중입니다.
+          </p>
+        </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex justify-between mt-16 pt-8 border-t border-border">

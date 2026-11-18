@@ -1,14 +1,24 @@
 import Link from "next/link";
-import { projects } from "@/data/projects";
+import { projects, automations } from "@/data/projects";
 import CareerItem from "@/components/CareerItem";
+import AutomationAccordion from "@/components/AutomationAccordion";
 
 export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 pt-20 pb-16">
-        <p className="text-sm text-muted mb-3">Service Planner / PM</p>
-        <h1 className="text-4xl font-bold tracking-tight mb-4">남준우</h1>
+      <section className="max-w-4xl mx-auto px-6 pt-10 pb-12">
+        <div className="flex items-center gap-5 mb-5">
+          <img
+            src="/images/memoji.png"
+            alt="남준우 미모티콘"
+            className="w-28 h-28"
+          />
+          <div>
+            <p className="text-sm text-muted mb-1">서비스기획자 / PM</p>
+            <h1 className="text-4xl font-bold tracking-tight">남준우</h1>
+          </div>
+        </div>
         <p className="text-base italic text-muted mb-4">
           &ldquo;업무 흐름 파악, 효율적 선택과 집중, 내외적 소통을 통한 의견조율&rdquo;
         </p>
@@ -36,6 +46,18 @@ export default function Home() {
           >
             Projects
           </a>
+        </div>
+      </section>
+
+      {/* AI Automation */}
+      <section className="max-w-4xl mx-auto px-6 pb-16">
+        <h2 className="text-sm font-medium text-muted mb-8 uppercase tracking-widest">
+          AI 활용 업무 자동화
+        </h2>
+        <div className="space-y-4">
+          {automations.map((item) => (
+            <AutomationAccordion key={item.id} item={item} />
+          ))}
         </div>
       </section>
 
@@ -67,7 +89,19 @@ export default function Home() {
                   &rarr;
                 </span>
               </div>
-              <div className="flex gap-2 mt-4">
+              {project.items.length > 0 && (
+                <div className="mt-4 bg-gray-50 rounded-md px-4 py-3">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                    {project.items.map((item) => (
+                      <li key={item.id} className="text-sm text-foreground flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-accent rounded-full shrink-0" />
+                        {item.title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <div className="flex flex-wrap gap-2 mt-4">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
@@ -166,17 +200,29 @@ export default function Home() {
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">스킬</h3>
-              <div className="flex flex-wrap gap-2">
-                {["Figma", "Excel", "Slack", "Notion", "Adobe Photoshop", "Adobe Illustrator"].map(
-                  (skill) => (
-                    <span
-                      key={skill}
-                      className="text-sm px-3 py-1.5 bg-gray-100 text-muted rounded-full"
-                    >
-                      {skill}
+              <div className="flex gap-5">
+                {[
+                  { name: "Figma", icon: "/icons/figma.svg" },
+                  { name: "MS Office", icon: "/icons/msoffice.svg" },
+                  { name: "Slack", icon: "/icons/slack.svg" },
+                  { name: "Notion", icon: "/icons/notion.svg" },
+                  { name: "Claude", icon: "/icons/claude-code.svg" },
+                  { name: "ChatGPT", icon: "/icons/chatgpt.svg" },
+                ].map((skill) => (
+                  <div
+                    key={skill.name}
+                    className="flex flex-col items-center gap-1.5"
+                  >
+                    <img
+                      src={skill.icon}
+                      alt={skill.name}
+                      className="w-7 h-7"
+                    />
+                    <span className="text-xs text-muted text-center leading-tight">
+                      {skill.name}
                     </span>
-                  )
-                )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

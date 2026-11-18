@@ -1,0 +1,144 @@
+"use client";
+
+import { useState } from "react";
+import type { ProjectItem } from "@/data/projects";
+
+export default function ProjectItemAccordion({
+  item,
+}: {
+  item: ProjectItem;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div className="border border-border rounded-lg overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left p-6 hover:bg-gray-50 transition-colors cursor-pointer"
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <h3 className="text-lg font-semibold">{item.title}</h3>
+            <p className="text-sm text-muted mt-1">{item.summary}</p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {item.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-2.5 py-1 bg-gray-100 text-muted rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <span
+            className={`text-muted transition-transform duration-300 mt-1 shrink-0 ml-4 ${
+              expanded ? "rotate-180" : ""
+            }`}
+          >
+            ↓
+          </span>
+        </div>
+      </button>
+
+      <div
+        className={`overflow-hidden ${
+          expanded ? "opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="px-6 pb-6 space-y-8 border-t border-border pt-6">
+          {/* 기본 정보 */}
+          <div className="flex flex-wrap gap-6 text-sm">
+            <div>
+              <span className="text-muted">기간</span>
+              <p className="font-medium mt-0.5">{item.period}</p>
+            </div>
+            <div>
+              <span className="text-muted">역할</span>
+              <p className="font-medium mt-0.5">{item.role}</p>
+            </div>
+            <div>
+              <span className="text-muted">팀 구성</span>
+              <p className="font-medium mt-0.5">{item.team}</p>
+            </div>
+          </div>
+
+          {/* 배경 및 목표 */}
+          <section>
+            <h4 className="font-semibold mb-3">배경 및 목표</h4>
+            <p className="text-sm text-muted leading-relaxed">
+              {item.background}
+            </p>
+          </section>
+
+          {/* 기획 과정 */}
+          <section>
+            <h4 className="font-semibold mb-3">기획 과정</h4>
+            <ul className="text-sm text-muted space-y-2 leading-relaxed">
+              {item.process.map((step, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className="text-accent font-mono shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* 주요 화면 */}
+          <section>
+            <h4 className="font-semibold mb-3">주요 화면</h4>
+            {item.screens.length > 0 ? (
+              <div className="space-y-6">
+                {item.screens.map((screen, i) => (
+                  <div key={i}>
+                    <p className="text-xs text-muted font-mono mb-2">
+                      {String(i + 1).padStart(2, "0")}. {screen.label}
+                    </p>
+                    <img
+                      src={screen.src}
+                      alt={screen.label}
+                      className="w-full rounded-lg border border-border"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-50 border border-border rounded-lg p-6">
+                <p className="text-muted text-sm">주요 화면 스크린샷을 추가해주세요.</p>
+              </div>
+            )}
+          </section>
+
+          {/* 라이브 URL */}
+          {item.liveUrl && (
+            <section>
+              <h4 className="font-semibold mb-3">라이브 URL</h4>
+              <a
+                href={item.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:underline"
+              >
+                {item.liveUrl}
+              </a>
+              <p className="text-xs text-muted mt-1">
+                * 현재 운영 중인 사이트이며, 기획 당시와 다를 수 있습니다.
+              </p>
+            </section>
+          )}
+
+          {/* 성과 및 회고 */}
+          <section>
+            <h4 className="font-semibold mb-3">성과 및 회고</h4>
+            <div className="text-sm text-muted leading-relaxed whitespace-pre-line">
+              {item.result}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}

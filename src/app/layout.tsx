@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import ScrollToTop from "@/components/ScrollToTop";
+import RollingText from "@/components/RollingText";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -33,7 +35,7 @@ export default function RootLayout({
         <header className="border-b border-border">
           <nav className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
             <Link href="/" className="text-lg font-semibold tracking-tight">
-              남준우
+              <RollingText />
             </Link>
             <div className="flex gap-6 text-sm text-muted">
               <Link href="/#projects" className="hover:text-foreground transition-colors">
@@ -53,6 +55,7 @@ export default function RootLayout({
         </header>
 
         <main className="flex-1">{children}</main>
+        <ScrollToTop />
 
         <footer className="border-t border-border">
           <div className="max-w-4xl mx-auto px-6 py-8 text-sm text-muted">
