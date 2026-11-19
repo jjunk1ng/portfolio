@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ProjectItem } from "@/data/projects";
+import RichText from "@/components/RichText";
 
 export default function ProjectItemAccordion({
   item,
@@ -67,7 +68,7 @@ export default function ProjectItemAccordion({
           <section>
             <h4 className="font-semibold mb-3">배경 및 목표</h4>
             <p className="text-sm text-muted leading-relaxed">
-              {item.background}
+              <RichText text={item.background} />
             </p>
           </section>
 
@@ -80,7 +81,7 @@ export default function ProjectItemAccordion({
                   <span className="text-accent font-mono shrink-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span>{step}</span>
+                  <span><RichText text={step} /></span>
                 </li>
               ))}
             </ul>
@@ -90,21 +91,79 @@ export default function ProjectItemAccordion({
           <section>
             <h4 className="font-semibold mb-3">주요 화면</h4>
             {item.screens.length > 0 ? (
-              <div className="space-y-6">
-                {item.screens.map((screen, i) => (
-                  <div key={i}>
-                    <p className="text-xs text-muted font-mono mb-2">
-                      {String(i + 1).padStart(2, "0")}. {screen.label}
-                    </p>
-                    <img
-                      src={screen.src}
-                      alt={screen.label}
-                      className="w-full rounded-lg border border-border"
-                      loading="lazy"
-                    />
+              (() => {
+                const hasGroups = item.screens.some((s) => /^\[.+?\]/.test(s.label));
+                const isAlimtalk = item.screens.some((s) => s.src.includes("alimtalk"));
+                if (!hasGroups) {
+                  return (
+                    <div className={isAlimtalk ? "grid grid-cols-3 gap-4" : "space-y-6"}>
+                      {item.screens.map((screen, i) => (
+                        <div key={i}>
+                          <p className="text-xs text-muted font-mono mb-2">
+                            {String(i + 1).padStart(2, "0")}. {screen.label}
+                          </p>
+                          <img
+                            src={screen.src}
+                            alt={screen.label}
+                            className="w-full rounded-lg"
+                            style={isAlimtalk ? undefined : { border: "1px solid #e5e7eb" }}
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                const groups: { group: string; items: { src: string; label: string }[] }[] = [];
+                item.screens.forEach((screen) => {
+                  const match = screen.label.match(/^\[(.+?)\]\s*(.+)$/);
+                  const group = match ? match[1] : "";
+                  const label = match ? match[2] : screen.label;
+                  const last = groups[groups.length - 1];
+                  if (last && last.group === group) {
+                    last.items.push({ src: screen.src, label });
+                  } else {
+                    groups.push({ group, items: [{ src: screen.src, label }] });
+                  }
+                });
+                const isLanding = item.screens.some((s) => s.src.includes("landing/sk"));
+                return (
+                  <div className="space-y-8">
+                    {groups.map((g, gi) => {
+                      const isMobileGroup = g.group === "Mobile";
+                      const isPcGroup = g.group === "PC";
+                      let gridClass = "grid grid-cols-2 sm:grid-cols-3 gap-4";
+                      if (isLanding && isPcGroup) gridClass = "grid grid-cols-1 gap-6";
+                      if (isLanding && isMobileGroup) gridClass = "grid grid-cols-4 gap-4";
+                      return (
+                      <div key={gi}>
+                        {g.group && (
+                          <div className="mb-4">
+                            <p className="text-sm font-semibold text-accent">{g.group}</p>
+                            <div className="border-b border-border mt-1.5" />
+                          </div>
+                        )}
+                        <div className={gridClass}>
+                          {g.items.map((screen, i) => (
+                            <div key={i}>
+                              <p className="text-xs text-muted font-mono mb-2">
+                                {screen.label}
+                              </p>
+                              <img
+                                src={screen.src}
+                                alt={screen.label}
+                                className="w-full rounded-lg"
+                                loading="lazy"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
+                );
+              })()
             ) : (
               <div className="bg-gray-50 border border-border rounded-lg p-6">
                 <p className="text-muted text-sm">주요 화면 스크린샷을 추가해주세요.</p>
@@ -134,7 +193,7 @@ export default function ProjectItemAccordion({
           <section>
             <h4 className="font-semibold mb-3">성과 및 회고</h4>
             <div className="text-sm text-muted leading-relaxed whitespace-pre-line">
-              {item.result}
+              <RichText text={item.result} />
             </div>
           </section>
         </div>

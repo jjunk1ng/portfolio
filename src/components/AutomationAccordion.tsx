@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { AutomationItem } from "@/data/projects";
+import RichText from "@/components/RichText";
 
 export default function AutomationAccordion({
   item,
@@ -51,7 +52,7 @@ export default function AutomationAccordion({
           <section>
             <h4 className="font-semibold mb-3">문제 정의</h4>
             <p className="text-sm text-muted leading-relaxed">
-              {item.problem}
+              <RichText text={item.problem} />
             </p>
           </section>
 
@@ -60,14 +61,21 @@ export default function AutomationAccordion({
             <section>
               <h4 className="font-semibold mb-3">주요 기능</h4>
               <ul className="text-sm text-muted space-y-2 leading-relaxed">
-                {item.features.map((feat, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span className="text-accent font-mono shrink-0">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{feat}</span>
-                  </li>
-                ))}
+                {item.features.map((feat, i) => {
+                  const isSub = feat.startsWith("ㄴ ");
+                  return (
+                    <li key={i} className={`flex gap-2 ${isSub ? "ml-8" : ""}`}>
+                      {isSub ? (
+                        <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-gray-400" />
+                      ) : (
+                        <span className="text-accent font-mono shrink-0">
+                          {String(i + 1 - item.features.slice(0, i).filter(f => f.startsWith("ㄴ ")).length).padStart(2, "0")}
+                        </span>
+                      )}
+                      <span><RichText text={isSub ? feat.slice(2) : feat} /></span>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           )}
@@ -104,7 +112,7 @@ export default function AutomationAccordion({
           <section>
             <h4 className="font-semibold mb-3">성과</h4>
             <div className="text-sm text-muted leading-relaxed whitespace-pre-line">
-              {item.result}
+              <RichText text={item.result} />
             </div>
           </section>
         </div>
