@@ -49,28 +49,36 @@ function Tooltip({ term, description }: { term: string; description: string }) {
   );
 }
 
+function parseInline(text: string, keyPrefix = ""): React.ReactNode[] {
+  const parts = text.split(/(\{\{[^}]+\}\})/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("{{") && part.endsWith("}}")) {
+      const inner = part.slice(2, -2);
+      const [term, desc] = inner.split("||");
+      if (term && desc) {
+        return <Tooltip key={`${keyPrefix}${i}`} term={term} description={desc} />;
+      }
+    }
+    return <span key={`${keyPrefix}${i}`}>{part}</span>;
+  });
+}
+
 export default function RichText({ text }: { text: string }) {
-  // Split by bold (**...**) and tooltip ({{term||desc}}) patterns
-  const parts = text.split(/(\*\*[^*]+\*\*|\{\{[^}]+\}\})/g);
+  // Split by bold first, then parse tooltips inside each segment
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
 
   return (
     <>
       {parts.map((part, i) => {
         if (part.startsWith("**") && part.endsWith("**")) {
+          const inner = part.slice(2, -2);
           return (
             <strong key={i} className="text-foreground font-semibold">
-              {part.slice(2, -2)}
+              {parseInline(inner, `b${i}-`)}
             </strong>
           );
         }
-        if (part.startsWith("{{") && part.endsWith("}}")) {
-          const inner = part.slice(2, -2);
-          const [term, desc] = inner.split("||");
-          if (term && desc) {
-            return <Tooltip key={i} term={term} description={desc} />;
-          }
-        }
-        return <span key={i}>{part}</span>;
+        return <React.Fragment key={i}>{parseInline(part, `t${i}-`)}</React.Fragment>;
       })}
     </>
   );

@@ -23,29 +23,16 @@ export default function Home() {
           &ldquo;업무 흐름 파악, 효율적 선택과 집중, 내외적 소통을 통한 의견조율&rdquo;
         </p>
         <p className="text-muted leading-relaxed max-w-2xl">
-          컴퓨터학을 전공하였지만, 개발 분야보다 조금 더 자신있고 잘 할 수 있는
-          서비스 기획 분야로 나아가고 있습니다. 다수의 업무 경험을 바탕으로
-          기획, 커뮤니케이션, 위기관리, 협업 능력을 갖추고 있으며,
-          좋은 분들과 협업하여 공동의 가치를 창출하고 싶습니다.
+          컴퓨터학을 전공하고 <strong className="text-foreground">서비스 기획자</strong>로 일하고 있습니다.{" "}
+          <strong className="text-foreground">개발에 대한 이해</strong>를 바탕으로 기획의 실현 가능성까지 고려하며,
+          반복되는 운영 문제는 직접 <strong className="text-foreground">자동화 도구</strong>를 만들어 해결합니다.{" "}
+          기획자의 시선으로 문제를 정의하고, 개발자의 언어로 팀과 소통하며,
+          함께 <strong className="text-foreground">더 나은 결과</strong>를 만들어가고 싶습니다.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 mt-6 text-sm text-muted">
           <span>📞 010-7275-5694</span>
           <span className="hidden sm:inline">·</span>
           <span>✉️ jjunk1ng@naver.com</span>
-        </div>
-        <div className="flex gap-4 mt-8">
-          <a
-            href="mailto:jjunk1ng@naver.com"
-            className="px-5 py-2.5 bg-accent text-white text-sm rounded-md hover:bg-gray-800 transition-colors"
-          >
-            Contact
-          </a>
-          <a
-            href="#projects"
-            className="px-5 py-2.5 border border-border text-sm rounded-md hover:bg-gray-50 transition-colors"
-          >
-            Projects
-          </a>
         </div>
       </section>
 
@@ -62,7 +49,7 @@ export default function Home() {
       </section>
 
       {/* Projects */}
-      <section id="projects" className="max-w-4xl mx-auto px-6 pb-20">
+      <section id="projects" className="max-w-4xl mx-auto px-6 pb-10">
         <h2 className="text-sm font-medium text-muted mb-8 uppercase tracking-widest">
           Projects
         </h2>
@@ -118,7 +105,7 @@ export default function Home() {
 
       {/* About */}
       <section id="about" className="border-t border-border">
-        <div className="max-w-4xl mx-auto px-6 py-20">
+        <div className="max-w-4xl mx-auto px-6 py-10">
           <h2 className="text-sm font-medium text-muted mb-8 uppercase tracking-widest">
             About
           </h2>
@@ -133,6 +120,7 @@ export default function Home() {
                 period="2024.11 - 현재"
                 company="(주) 카베이"
                 role="서비스 기획자 · 선임"
+                defaultExpanded
                 items={[
                   "플랫폼 별 IA 작성 및 관리",
                   "기능 별 User Flow 작성 및 관리",

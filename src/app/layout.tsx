@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import ScrollToTop from "@/components/ScrollToTop";
-import RollingText from "@/components/RollingText";
+import ScrollProgress from "@/components/ScrollProgress";
+import Header from "@/components/Header";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,27 +33,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <header className="border-b border-border">
-          <nav className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
-            <Link href="/" className="text-lg font-semibold tracking-tight">
-              <RollingText />
-            </Link>
-            <div className="flex gap-6 text-sm text-muted">
-              <Link href="/#projects" className="hover:text-foreground transition-colors">
-                Projects
-              </Link>
-              <Link href="/#about" className="hover:text-foreground transition-colors">
-                About
-              </Link>
-              <a
-                href="mailto:jjunk1ng@naver.com"
-                className="hover:text-foreground transition-colors"
-              >
-                Contact
-              </a>
-            </div>
-          </nav>
-        </header>
+        <ScrollProgress />
+        <Header />
 
         <main className="flex-1">{children}</main>
         <ScrollToTop />

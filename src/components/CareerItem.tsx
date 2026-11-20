@@ -7,6 +7,7 @@ interface CareerItemProps {
   company: string;
   role: string;
   items: string[];
+  defaultExpanded?: boolean;
 }
 
 export default function CareerItem({
@@ -14,8 +15,9 @@ export default function CareerItem({
   company,
   role,
   items,
+  defaultExpanded = false,
 }: CareerItemProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const shouldCollapse = items.length > 3;
 
   return (
