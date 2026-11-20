@@ -88,7 +88,19 @@ export default function AutomationAccordion({
                 {item.screens.map((screen, i) => (
                   <div key={i}>
                     <p className="text-xs text-muted font-mono mb-2">
-                      {String(i + 1).padStart(2, "0")}. {screen.label}
+                      {String(i + 1).padStart(2, "0")}.{" "}
+                      {screen.label.includes("**") ? (
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: screen.label.replace(
+                              /\*\*(.+?)\*\*/g,
+                              "<strong class='text-foreground'>$1</strong>"
+                            ),
+                          }}
+                        />
+                      ) : (
+                        screen.label
+                      )}
                     </p>
                     <img
                       src={screen.src}
