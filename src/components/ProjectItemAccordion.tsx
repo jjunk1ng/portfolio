@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ProjectItem } from "@/data/projects";
 import RichText from "@/components/RichText";
+import Lightbox from "@/components/Lightbox";
 
 export default function ProjectItemAccordion({
   item,
@@ -10,6 +11,7 @@ export default function ProjectItemAccordion({
   item: ProjectItem;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
   return (
     <div className="border border-border rounded-lg overflow-hidden">
@@ -105,9 +107,10 @@ export default function ProjectItemAccordion({
                           <img
                             src={screen.src}
                             alt={screen.label}
-                            className="w-full rounded-lg"
+                            className="w-full rounded-lg cursor-zoom-in hover:opacity-90 transition-opacity"
                             style={isAlimtalk ? undefined : { border: "1px solid #e5e7eb" }}
                             loading="lazy"
+                            onClick={() => setLightbox({ src: screen.src, alt: screen.label })}
                           />
                         </div>
                       ))}
@@ -152,8 +155,9 @@ export default function ProjectItemAccordion({
                               <img
                                 src={screen.src}
                                 alt={screen.label}
-                                className="w-full rounded-lg"
+                                className="w-full rounded-lg cursor-zoom-in hover:opacity-90 transition-opacity"
                                 loading="lazy"
+                                onClick={() => setLightbox({ src: screen.src, alt: screen.label })}
                               />
                             </div>
                           ))}
@@ -198,6 +202,9 @@ export default function ProjectItemAccordion({
           </section>
         </div>
       </div>
+      {lightbox && (
+        <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { AutomationItem } from "@/data/projects";
 import RichText from "@/components/RichText";
+import Lightbox from "@/components/Lightbox";
 
 export default function AutomationAccordion({
   item,
@@ -10,6 +11,7 @@ export default function AutomationAccordion({
   item: AutomationItem;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
   return (
     <div className="border border-border rounded-lg overflow-hidden">
@@ -105,8 +107,9 @@ export default function AutomationAccordion({
                     <img
                       src={screen.src}
                       alt={screen.label}
-                      className="w-full rounded-lg border border-border"
+                      className="w-full rounded-lg border border-border cursor-zoom-in hover:opacity-90 transition-opacity"
                       loading="lazy"
+                      onClick={() => setLightbox({ src: screen.src, alt: screen.label })}
                     />
                   </div>
                 ))}
@@ -129,6 +132,9 @@ export default function AutomationAccordion({
           </section>
         </div>
       </div>
+      {lightbox && (
+        <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />
+      )}
     </div>
   );
 }
