@@ -95,7 +95,7 @@ export default function ProjectItemAccordion({
             {item.screens.length > 0 ? (
               (() => {
                 const hasGroups = item.screens.some((s) => /^\[.+?\]/.test(s.label));
-                const isAlimtalk = item.screens.some((s) => s.src.includes("alimtalk"));
+                const isAlimtalk = item.screens.some((s) => s.src.includes("alimtalk") || s.src.includes("partner-review-research"));
                 if (!hasGroups) {
                   return (
                     <div className={isAlimtalk ? "grid grid-cols-3 gap-4" : "space-y-6"}>
