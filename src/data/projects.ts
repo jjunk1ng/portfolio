@@ -476,6 +476,7 @@ export const projects: Project[] = [
           "**사용가이드 제작**: 협업 업체 담당자들이 어드민을 원활하게 사용할 수 있도록 **사용가이드 문서** 제작·배포",
         ],
         screens: [
+          { src: "/images/partner-admin/0. 로그인(OTP).png", label: "로그인 (OTP)" },
           { src: "/images/partner-admin/1. DB리스트(메인).png", label: "DB 리스트 (메인)" },
           { src: "/images/partner-admin/2. 업체관리.png", label: "업체 관리" },
           { src: "/images/partner-admin/3. 출고후기검수.png", label: "출고후기 검수" },
