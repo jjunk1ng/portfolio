@@ -2,6 +2,7 @@ import Link from "next/link";
 import { projects, automations } from "@/data/projects";
 import CareerItem from "@/components/CareerItem";
 import AutomationAccordion from "@/components/AutomationAccordion";
+import FlipCard from "@/components/FlipCard";
 
 export default function Home() {
   return (
@@ -9,11 +10,7 @@ export default function Home() {
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-6 pt-10 pb-12">
         <div className="flex items-center gap-5 mb-5">
-          <img
-            src="/images/memoji.png"
-            alt="남준우 미모티콘"
-            className="w-28 h-28"
-          />
+          <FlipCard />
           <div>
             <p className="text-sm text-muted mb-1">서비스기획자 / PM</p>
             <h1 className="text-4xl font-bold tracking-tight">남준우</h1>
